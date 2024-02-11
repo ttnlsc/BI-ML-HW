@@ -39,10 +39,18 @@ def multiclass_accuracy(y_pred, y_true):
     accuracy - ratio of accurate predictions to total samples
     """
 
-    """
-    YOUR CODE IS HERE
-    """
-    pass
+    labels = np.unique(y_true)
+    cm = np.zeros((len(labels), len(labels)), dtype=int)
+    for i in range(len(y_true)):
+        true_label = np.where(labels == y_true[i])[0][0]
+        pred_label = np.where(labels == y_pred[i])[0][0]
+        cm[true_label, pred_label] += 1
+
+    tp = np.diag(cm).sum()
+
+    accuracy = tp / cm.sum()
+
+    return accuracy
 
 
 def r_squared(y_pred, y_true):

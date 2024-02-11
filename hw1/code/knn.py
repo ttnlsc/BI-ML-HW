@@ -122,7 +122,6 @@ class KNNClassifier:
            for every test sample
         """
 
-        #n_train = distances.shape[1]
         n_test = distances.shape[0]
         prediction = np.zeros(n_test, dtype=bool)
 
@@ -146,11 +145,12 @@ class KNNClassifier:
            for every test sample
         """
 
-        n_train = distances.shape[0]
         n_test = distances.shape[0]
-        prediction = np.zeros(n_test, np.int)
+        prediction = np.zeros(n_test, dtype=int)
 
-        """
-        YOUR CODE IS HERE
-        """
-        pass
+        for i in range(n_test):
+            nearest_indices = np.argsort(distances[i])[:self.k]
+            counts = np.bincount(self.train_y[nearest_indices])
+            prediction[i] = np.argmax(counts)
+
+        return prediction
