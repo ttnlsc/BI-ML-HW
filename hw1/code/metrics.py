@@ -11,15 +11,22 @@ def binary_classification_metrics(y_pred, y_true):
     precision, recall, f1, accuracy - classification metrics
     """
 
-    # TODO: implement metrics!
-    # Some helpful links:
-    # https://en.wikipedia.org/wiki/Precision_and_recall
-    # https://en.wikipedia.org/wiki/F1_score
+    labels = np.array([0, 1])
+    cm = np.zeros((2, 2), dtype=int)
+    for i in range(len(y_true)):
+        true_label = np.where(labels == y_true[i])[0][0]
+        pred_label = np.where(labels == y_pred[i])[0][0]
+        cm[true_label, pred_label] += 1
+    tp = cm[1, 1]
+    tn = cm[0, 0]
+    fp = cm[0, 1]
+    fn = cm[1, 0]
+    accuracy = (tp + tn) / cm.sum()
+    precision = tp / (tp + fp) if (tp + fp) != 0 else 0
+    recall = tp / (tp + fn) if (tp + fn) != 0 else 0
+    f1 = 2 * precision * recall / (precision + recall) if (precision + recall) != 0 else 0
 
-    """
-    YOUR CODE IS HERE
-    """
-    pass
+    return precision, recall, f1, accuracy
 
 
 def multiclass_accuracy(y_pred, y_true):

@@ -124,7 +124,7 @@ class KNNClassifier:
 
         #n_train = distances.shape[1]
         n_test = distances.shape[0]
-        prediction = np.zeros(n_test)
+        prediction = np.zeros(n_test, dtype=bool)
 
         for i in range(n_test):
             nearest_indices = np.argsort(distances[i])[:self.k]
